@@ -46,7 +46,7 @@ use({
 
 ### Usage
 
-We will make the keymaps refer to your nvim-surround's aliases automatically after calling `setup`, if your `auto_map` option is true (defalut is true). <br>
+We will make the keymaps refer to your nvim-surround's aliases automatically after calling `setup`, if your `auto_mapping` option is true (defalut is true). <br>
 
 Or, you could map manually like the following:
 
@@ -71,11 +71,13 @@ end, { desc = "inside the quote" })
 ### Configuration
 ```lua
 {
-    auto_map = true
+    auto_mapping = true
+    -- disable 'b' and 'B' mapping
+    disable_builtin_mapping = true,
 }
 ```
 
 
 ### TODO
-- [ ] new option to disable auto mapping for builtin textobject (ib, etc.)
+- [x] new option to disable auto mapping for builtin textobject (ib, etc.)
 - [ ] support nvim-surround

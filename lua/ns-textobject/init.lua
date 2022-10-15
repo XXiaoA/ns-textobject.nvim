@@ -6,7 +6,8 @@ local ns_buffer = require("nvim-surround.buffer")
 local ns_config = require("nvim-surround.config")
 
 M.default_opts = {
-    auto_map = true,
+    auto_mapping = true,
+    disable_builtin_mapping = true,
 }
 
 -- Gets the nearest two selections for the left and right surrounding pair.
@@ -81,15 +82,22 @@ function M.setup(opts)
     opts = opts or {}
     M.user_opts = vim.tbl_deep_extend("force", M.default_opts, opts)
 
-    if M.user_opts.auto_map then
+    if M.user_opts.auto_mapping then
         local aliases = vim.tbl_keys(ns_config.user_opts.aliases)
         for _, alias in ipairs(aliases) do
+            -- disable 'b' and 'B' mapping if `disable_builtin_mapping` option is true
+            if M.user_opts.disable_builtin_mapping and (alias == "b" or alias == "B") then
+                goto countine
+            end
+
             vim.keymap.set({ "x", "o" }, "i" .. alias, function()
                 M.create_textobj(alias, "i")
             end)
             vim.keymap.set({ "x", "o" }, "a" .. alias, function()
                 M.create_textobj(alias, "a")
             end)
+
+            ::countine::
         end
     end
 end
