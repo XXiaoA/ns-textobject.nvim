@@ -33,14 +33,28 @@ Install the plugin with your favourite package manager:
 use({
     "XXiaoA/ns-textobject.nvim",
     after = "nvim-surround",
+    config = function()
+        require("ns-textobject").setup({
+            -- your configuration here
+            -- or just keep empty
+        })
+    end
 })
 ```
 </details>
 
 
 ### Usage
+
+We will make the keymaps refer to your nvim-surround's aliases automatically after calling `setup`, if your `auto_map` option is true (defalut is true). <br>
+
+Or, you could map manually like the following:
+
+<details>
+<summary><font size="2" color="">Click to show the code.</font></summary>
+
 ```lua
-local nstextobject = require("nstextobject")
+local nstextobject = require("ns-textobject")
 
 vim.keymap.set({ "x", "o" }, "aq", function()
     -- q means the alias of nvim-surround
@@ -50,18 +64,13 @@ end, { desc = "around the quote" })
 vim.keymap.set({ "x", "o" }, "iq", function()
     nstextobject.create_textobj("q", "i")
 end, { desc = "inside the quote" })
+```
+</details>
 
-vim.keymap.set({ "x", "o" }, "aa", function()
-    nstextobject.create_textobj("a", "a")
-end)
-vim.keymap.set({ "x", "o" }, "ia", function()
-    nstextobject.create_textobj("a", "i")
-end)
 
-vim.keymap.set({ "x", "o" }, "ar", function()
-    nstextobject.create_textobj("r", "a")
-end)
-vim.keymap.set({ "x", "o" }, "ir", function()
-    nstextobject.create_textobj("r", "i")
-end)
+### Configuration
+```lua
+{
+    auto_map = true
+}
 ```
