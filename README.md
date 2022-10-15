@@ -74,3 +74,8 @@ end, { desc = "inside the quote" })
     auto_map = true
 }
 ```
+
+
+### TODO
+- [ ] new option to disable auto mapping for builtin textobject (ib, etc.)
+- [ ] support nvim-surround
