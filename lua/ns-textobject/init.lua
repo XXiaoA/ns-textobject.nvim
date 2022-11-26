@@ -1,6 +1,5 @@
 local M = {}
 
-local api = vim.api
 local ns_utils = require("nvim-surround.utils")
 local ns_buffer = require("nvim-surround.buffer")
 local ns_config = require("nvim-surround.config")
@@ -37,8 +36,10 @@ local function get_nearest_selections(char, mode)
         if mode == "a" then
             ns_buffer.set_curpos(nearest_selections.left.first_pos)
         else
-            local left_pos = nearest_selections.left.first_pos
-            ns_buffer.set_curpos({ left_pos[1], left_pos[2] + 1 })
+            ns_buffer.set_curpos({
+                nearest_selections.left.last_pos[1],
+                nearest_selections.left.last_pos[2] + 1,
+            })
         end
     end
 
@@ -49,32 +50,31 @@ end
 ---@param alias string
 ---@param mode "i"|"a"
 function M.create_textobj(alias, mode)
-    -- note the cursor position of end point and start point
-    -- so that we can restore the visual mode if fail to find quotes
-    local start_curpos, end_curpos
-    local is_visual
+    local cur_mode = vim.api.nvim_get_mode().mode
 
-    if api.nvim_get_mode().mode == "v" then
-        end_curpos = ns_buffer.get_curpos()
-        vim.cmd.normal("o")
-        start_curpos = ns_buffer.get_curpos()
+    if cur_mode == "v" then
         vim.cmd.normal("v")
-        is_visual = true
     end
-
     local nearest_selections = get_nearest_selections(alias, mode)
     if nearest_selections then
-        local right_pos = nearest_selections.right.first_pos
+        if mode == "a" then
+            ns_buffer.set_curpos(nearest_selections.left.first_pos)
+        else
+            ns_buffer.set_curpos({
+                nearest_selections.left.last_pos[1],
+                nearest_selections.left.last_pos[2] + 1,
+            })
+        end
+
         vim.cmd.normal("v")
         if mode == "a" then
-            ns_buffer.set_curpos(right_pos)
+            ns_buffer.set_curpos(nearest_selections.right.last_pos)
         else
-            ns_buffer.set_curpos({ right_pos[1], right_pos[2] - 1 })
+            ns_buffer.set_curpos({
+                nearest_selections.right.first_pos[1],
+                nearest_selections.right.first_pos[2] - 1,
+            })
         end
-    elseif is_visual then
-        ns_buffer.set_curpos(start_curpos)
-        vim.cmd.normal("v")
-        ns_buffer.set_curpos(end_curpos)
     end
 end
 
