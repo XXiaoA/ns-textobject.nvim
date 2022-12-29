@@ -55,7 +55,12 @@ function M.create_textobj(alias, mode)
     if cur_mode == "v" then
         vim.cmd.normal("v")
     end
+
+    --- store current operatorfunc because nvim-surround may change it
+    local _operatorfunc = vim.go.operatorfunc
     local nearest_selections = get_nearest_selections(alias, mode)
+    vim.go.operatorfunc = _operatorfunc
+
     if nearest_selections then
         if mode == "a" then
             ns_buffer.set_curpos(nearest_selections.left.first_pos)
