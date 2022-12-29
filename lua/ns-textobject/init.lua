@@ -62,7 +62,12 @@ function M.create_textobj(alias, mode)
         is_visual = true
     end
 
+
+    --- store current operatorfunc because nvim-surround may change it
+    local _operatorfunc = vim.go.operatorfunc
     local nearest_selections = get_nearest_selections(alias, mode)
+    vim.go.operatorfunc = _operatorfunc
+
     if nearest_selections then
         local right_pos = nearest_selections.right.first_pos
         vim.cmd.normal("v")
