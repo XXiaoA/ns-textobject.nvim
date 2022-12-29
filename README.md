@@ -81,4 +81,4 @@ end, { desc = "inside the quote" })
 
 ### TODO
 - [x] new option to disable auto mapping for builtin textobject (ib, etc.)
-- [ ] support nvim-surround
+- [x] support nvim-surround
