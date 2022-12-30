@@ -47,9 +47,9 @@ use({
 
 ### Usage
 
-We will make the keymaps refer to your nvim-surround's aliases automatically after calling `setup`, if your `auto_mapping` option is true (defalut is true). <br>
+We will make the keymaps refer to your nvim-surround's aliases and surrounds automatically after calling `setup`. If you want to disable this feature, check the [Configuration](#Configuration) . <br>
 
-Or, you could map manually like the following:
+Then you're able to map manually like the following:
 
 <details>
 <summary><font size="2" color="">Click to show the code.</font></summary>
@@ -58,13 +58,18 @@ Or, you could map manually like the following:
 local nstextobject = require("ns-textobject")
 
 vim.keymap.set({ "x", "o" }, "aq", function()
-    -- q means a alias or surround of nvim-surround
-    -- a means around or i means inside
+    -- First parameter means a alias or surround of nvim-surround
+    -- The second one has two choice: `a` means around or `i` means inside
     nstextobject.create_textobj("q", "a")
-end, { desc = "around the quote" })
+end, { desc = "Around the quote" })
 vim.keymap.set({ "x", "o" }, "iq", function()
     nstextobject.create_textobj("q", "i")
-end, { desc = "inside the quote" })
+end, { desc = "Inside the quote" })
+
+-- Or a simple way:
+-- First parameter means a alias or surround of nvim-surround
+-- The second one used to add the description for keymap
+nstextobject.map_textobj("q", "quotes")
 ```
 </details>
 
