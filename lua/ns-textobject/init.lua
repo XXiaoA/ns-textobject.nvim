@@ -17,6 +17,7 @@ local function get_nearest_selections(char, mode)
     char = ns_utils.get_alias(char)
 
     local chars = ns_config.get_opts().aliases[char] or { char }
+    chars = type(chars) == "string" and { chars } or chars
     local curpos = ns_buffer.get_curpos()
     local selections_list = {}
     -- Iterate through all possible selections for each aliased character, and find the closest pair
