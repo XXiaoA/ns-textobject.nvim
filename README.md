@@ -58,7 +58,7 @@ Or, you could map manually like the following:
 local nstextobject = require("ns-textobject")
 
 vim.keymap.set({ "x", "o" }, "aq", function()
-    -- q means the alias of nvim-surround
+    -- q means a alias or surround of nvim-surround
     -- a means around or i means inside
     nstextobject.create_textobj("q", "a")
 end, { desc = "around the quote" })
@@ -71,7 +71,7 @@ end, { desc = "inside the quote" })
 
 ### Configuration
 ```lua
-default_opts = {
+{
     auto_mapping = {
         -- automatically mapping for nvim-surround's aliases
         aliases = true,
