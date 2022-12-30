@@ -20,11 +20,11 @@ function M.get_opts()
 end
 
 function M.auto_map()
-    if M.user_opts.auto_mapping.aliases then
+    if M.get_opts().auto_mapping.aliases then
         local aliases = vim.tbl_keys(ns_config.get_opts().aliases)
-        if M.user_opts.disable_builtin_mapping.enabled then
+        if M.get_opts().disable_builtin_mapping.enabled then
             aliases = vim.tbl_filter(function(surround)
-                local bulitin_mappings = M.user_opts.disable_builtin_mapping.chars
+                local bulitin_mappings = M.get_opts().disable_builtin_mapping.chars
                 if not vim.tbl_contains(bulitin_mappings, surround) then
                     return surround
                 end
@@ -36,11 +36,11 @@ function M.auto_map()
         end
     end
 
-    if M.user_opts.auto_mapping.surrounds then
+    if M.get_opts().auto_mapping.surrounds then
         local surrounds = vim.tbl_keys(ns_config.get_opts().surrounds)
-        if M.user_opts.disable_builtin_mapping.enabled then
+        if M.get_opts().disable_builtin_mapping.enabled then
             surrounds = vim.tbl_filter(function(surround)
-                local bulitin_mappings = M.user_opts.disable_builtin_mapping.chars
+                local bulitin_mappings = M.get_opts().disable_builtin_mapping.chars
                 if
                     not vim.tbl_contains(bulitin_mappings, surround)
                     and surround ~= "invalid_key_behavior"
