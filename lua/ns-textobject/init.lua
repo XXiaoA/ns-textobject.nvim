@@ -5,8 +5,14 @@ local ns_buffer = require("nvim-surround.buffer")
 local ns_config = require("nvim-surround.config")
 
 M.default_opts = {
-    auto_mapping = true,
-    disable_builtin_mapping = true,
+    auto_mapping = {
+        aliases = true,
+        surrounds = true,
+    },
+    disable_builtin_mapping = {
+        enabled = true,
+        chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
+    },
 }
 
 -- Gets the nearest two selections for the left and right surrounding pair.
@@ -84,28 +90,75 @@ function M.create_textobj(alias, mode)
     end
 end
 
+---@param mode string|table
+function M.set_keymap(mode)
+    --- set a new keymap
+    ---@param lhs string
+    ---@param rhs string|function
+    ---@param opts table
+    return function(lhs, rhs, opts)
+        opts = opts or {}
+
+        local options = vim.tbl_extend("force", {
+            noremap = true,
+            silent = true,
+        }, opts)
+
+        vim.keymap.set(mode, lhs, rhs, options)
+    end
+end
+
+function M.auto_map()
+    local textobj_map = M.set_keymap({ "x", "o" })
+    if M.user_opts.auto_mapping.aliases then
+        local aliases = vim.tbl_keys(ns_config.get_opts().aliases)
+        if M.user_opts.disable_builtin_mapping.enabled then
+            aliases = vim.tbl_filter(function(surround)
+                local bulitin_mappings = M.user_opts.disable_builtin_mapping.chars
+                if not vim.tbl_contains(bulitin_mappings, surround) then
+                    return surround
+                end
+            end, aliases)
+        end
+
+        for _, alias in ipairs(aliases) do
+            textobj_map("i" .. alias, function()
+                M.create_textobj(alias, "i")
+            end)
+            textobj_map("a" .. alias, function()
+                M.create_textobj(alias, "a")
+            end)
+        end
+    end
+
+    if M.user_opts.auto_mapping.surrounds then
+        local surrounds = vim.tbl_keys(ns_config.get_opts().surrounds)
+        if M.user_opts.disable_builtin_mapping.enabled then
+            surrounds = vim.tbl_filter(function(surround)
+                local bulitin_mappings = M.user_opts.disable_builtin_mapping.chars
+                if
+                    not vim.tbl_contains(bulitin_mappings, surround)
+                    and surround ~= "invalid_key_behavior"
+                then
+                    return surround
+                end
+            end, surrounds)
+        end
+        for _, surround in ipairs(surrounds) do
+            textobj_map("i" .. surround, function()
+                M.create_textobj(surround, "i")
+            end)
+            textobj_map("a" .. surround, function()
+                M.create_textobj(surround, "a")
+            end)
+        end
+    end
+end
+
 function M.setup(opts)
     opts = opts or {}
     M.user_opts = vim.tbl_deep_extend("force", M.default_opts, opts)
-
-    if M.user_opts.auto_mapping then
-        local aliases = vim.tbl_keys(ns_config.user_opts.aliases)
-        for _, alias in ipairs(aliases) do
-            -- disable 'b' and 'B' mapping if `disable_builtin_mapping` option is true
-            if M.user_opts.disable_builtin_mapping and (alias == "b" or alias == "B") then
-                goto countine
-            end
-
-            vim.keymap.set({ "x", "o" }, "i" .. alias, function()
-                M.create_textobj(alias, "i")
-            end)
-            vim.keymap.set({ "x", "o" }, "a" .. alias, function()
-                M.create_textobj(alias, "a")
-            end)
-
-            ::countine::
-        end
-    end
+    M.auto_map()
 end
 
 return M

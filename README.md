@@ -37,7 +37,7 @@ use({
     config = function()
         require("ns-textobject").setup({
             -- your configuration here
-            -- or just keep empty
+            -- or just left empty to use defaluts
         })
     end
 })
@@ -71,10 +71,18 @@ end, { desc = "inside the quote" })
 
 ### Configuration
 ```lua
-{
-    auto_mapping = true
-    -- disable 'b' and 'B' mapping
-    disable_builtin_mapping = true,
+default_opts = {
+    auto_mapping = {
+        -- automatically mapping for nvim-surround's aliases
+        aliases = true,
+        -- for nvim-surround's surrounds
+        surrounds = true,
+    },
+    disable_builtin_mapping = {
+        enabled = true,
+        -- list of char which shouldn't mapping by auto_mapping
+        chars = { "b", "B", "t", "`", "'", '"', "{", "}", "(", ")", "[", "]", "<", ">" },
+    },
 }
 ```
 
