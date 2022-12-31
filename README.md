@@ -15,7 +15,7 @@
 		<img alt="Repo Size" src="https://img.shields.io/github/repo-size/XXiaoA/ns-textobject.nvim?color=%23DDB6F2&label=SIZE&logo=codesandbox&style=for-the-badge&logoColor=D9E0EE&labelColor=302D41"/></a>
 </p>
 
-https://user-images.githubusercontent.com/62557596/196021198-cac764a0-7aac-494b-a4cc-03d679acfedb.mp4
+https://user-images.githubusercontent.com/62557596/210149085-8cb8c3e0-dd57-40c6-aeec-5fbac8aa01d1.mp4
 
 
 ### Requirements
