@@ -15,6 +15,8 @@ M.default_opts = {
 
 M.user_opts = nil
 
+--- get configuration
+---@return table
 function M.get_opts()
     return M.user_opts or M.default_opts
 end
@@ -55,6 +57,8 @@ function M.auto_map()
     end
 end
 
+--- setup ns-textobject
+---@param opts table
 function M.setup(opts)
     opts = opts or {}
     M.user_opts = vim.tbl_deep_extend("force", M.default_opts, opts)

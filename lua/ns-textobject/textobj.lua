@@ -76,9 +76,14 @@ function M.create_textobj(char, mode)
                 nearest_selections.right.first_pos[2] - 1,
             })
         end
+    else
+        vim.defer_fn(vim.cmd.stopinsert, 0.1)
     end
 end
 
+--- add keymap for inside and around textobject
+---@param char string
+---@param desc string
 function M.map_textobj(char, desc)
     local mode_desc = { i = "Inside ", a = "Around " }
     for _, mode in ipairs({ "i", "a" }) do
