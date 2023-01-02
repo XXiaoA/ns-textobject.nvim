@@ -77,7 +77,12 @@ function M.create_textobj(char, mode)
             })
         end
     else
-        vim.defer_fn(vim.cmd.stopinsert, 0.1)
+        vim.defer_fn(function()
+            if vim.api.nvim_get_mode().mode == "i" then
+                vim.cmd.stopinsert()
+                vim.cmd.normal("l")
+            end
+        end, 0.2)
     end
 end
 
