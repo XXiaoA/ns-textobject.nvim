@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-	A textobejct plugin with nvim-surround
+    Awesome textobject plugin works with nvim-surround 
 </p>
 
 <p align="center">
@@ -23,6 +23,7 @@ https://user-images.githubusercontent.com/62557596/210149085-8cb8c3e0-dd57-40c6-
 require("ns-textobject").setup({})
 
 -- from https://github.com/kylechui/nvim-surround/discussions/53#discussioncomment-3134891
+-- move the following callback into `~/.config/nvim/after/ftplugin/markdown.lua`
 require("nvim-surround").buffer_setup({
     surrounds = {
         ["l"] = {
