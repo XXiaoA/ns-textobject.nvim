@@ -16,6 +16,41 @@
 </p>
 
 https://user-images.githubusercontent.com/62557596/210149085-8cb8c3e0-dd57-40c6-aeec-5fbac8aa01d1.mp4
+<details>
+<summary>Click to show how to achieve the effect in demo.</summary>
+
+```lua
+require("ns-textobject").setup({})
+
+-- from https://github.com/kylechui/nvim-surround/discussions/53#discussioncomment-3134891
+require("nvim-surround").buffer_setup({
+    surrounds = {
+        ["l"] = {
+            add = function()
+                local clipboard = vim.fn.getreg("+"):gsub("\n", "")
+                return {
+                    { "[" },
+                    { "](" .. clipboard .. ")" },
+                }
+            end,
+            find = "%b[]%b()",
+            delete = "^(%[)().-(%]%b())()$",
+            change = {
+                target = "^()()%b[]%((.-)()%)$",
+                replacement = function()
+                    local clipboard = vim.fn.getreg("+"):gsub("\n", "")
+                    return {
+                        { "" },
+                        { clipboard },
+                    }
+                end,
+            },
+        },
+    }
+})
+```
+
+</details>
 
 
 ### Requirements
