@@ -9,7 +9,7 @@ local textobj_map = require("ns-textobject.keymap").textobj_map
 ---@param mode "i"|"a" Inside or around
 ---@return table A table containing the start and end positions of the delimiters.
 local function get_nearest_selections(char, mode)
-    char = ns_utils.get_alias(char)
+    char = ns_config.get_alias(char)
 
     local chars = ns_config.get_opts().aliases[char] or { char }
     chars = type(chars) == "string" and { chars } or chars
