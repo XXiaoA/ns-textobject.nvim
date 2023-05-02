@@ -16,6 +16,7 @@ local function get_nearest_selections(char, mode)
     local curpos = ns_buffer.get_curpos()
     local selections_list = {}
     -- Iterate through all possible selections for each aliased character, and find the closest pair
+    local winview = vim.fn.winsaveview()
     for _, c in ipairs(chars) do
         local cur_selections
         cur_selections = ns_config.get_delete(c)(c)
@@ -26,6 +27,7 @@ local function get_nearest_selections(char, mode)
         -- Reset the cursor position
         ns_buffer.set_curpos(curpos)
     end
+    vim.fn.winrestview(winview)
     local nearest_selections = ns_utils.filter_selections_list(selections_list)
     -- If a pair of selections is found, jump to the beginning of the left one
     if nearest_selections then
