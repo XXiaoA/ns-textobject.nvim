@@ -17,7 +17,7 @@
 
 https://user-images.githubusercontent.com/62557596/210149085-8cb8c3e0-dd57-40c6-aeec-5fbac8aa01d1.mp4
 <details>
-<summary>Click to show how to achieve the effect in demo.</summary>
+<summary>Click to show the configuration in demo.</summary>
 
 ```lua
 require("ns-textobject").setup({})
@@ -59,34 +59,12 @@ require("nvim-surround").buffer_setup({
 - [nvim-surround](https://github.com/kylechui/nvim-surround)
 
 
-### Installation
-
-Install the plugin with your favourite package manager:
-
-<details>
-	<summary><a href="https://github.com/wbthomason/packer.nvim">Packer.nvim</a></summary>
-
-```lua
-use({
-    "XXiaoA/ns-textobject.nvim",
-    after = "nvim-surround",
-    config = function()
-        require("ns-textobject").setup({
-            -- your configuration here
-            -- or just left empty to use defaluts
-        })
-    end
-})
-```
-</details>
-
 
 ### Usage
 
-We will make the keymaps refer to your nvim-surround's aliases and surrounds automatically after calling `setup`. If you want to disable this feature, check the [Configuration](#Configuration) . <br>
+We will make the keymaps refer to your nvim-surround's aliases and surrounds **automatically** after calling `setup`. If you want to disable this feature, check the [Configuration](#Configuration) . <br>
 
-Then you're able to map manually like the following:
-
+Or you're abled to map manually like the following:
 <details>
 <summary><font size="2" color="">Click to show the code.</font></summary>
 
@@ -106,6 +84,53 @@ end, { desc = "Inside the quote" })
 -- First parameter means a alias or surround of nvim-surround
 -- The second one used to add the description for keymap
 nstextobject.map_textobj("q", "quotes")
+```
+</details>
+
+And here comes some useful features with default configuration:
+- For function:
+```lua
+a = func(args)
+-- if press dsf
+a = args
+-- if press daf
+a = 
+-- if press dif
+a = func()
+```
+
+- For quotes
+```lua
+s = "this's a `string`"
+-- press ciqworld (cursor inside "")
+s = "word"
+-- press ciqworld (cursor inside ``)
+s = "this's a `world`"
+```
+
+- And others easy-used textobjects without pressing extra keys or leaving main area of keyboard:
+    - `ia`|`aa`: alias of `i<`|`a<` (for <sth.>)
+    - `ir`|`ar`: alias of `i[`|`a[` (for \[sth.\])
+
+
+### Installation
+
+Install the plugin with your favourite package manager:
+
+<details>
+	<summary><a href="https://github.com/wbthomason/packer.nvim">Packer.nvim</a></summary>
+
+```lua
+use({
+    "XXiaoA/ns-textobject.nvim",
+    after = "nvim-surround",
+    config = function()
+        require("ns-textobject").setup({
+            -- your configuration here
+            -- or just left empty to use defaluts
+        })
+    end
+})
 ```
 </details>
 
