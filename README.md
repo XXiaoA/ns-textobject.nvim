@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-    Awesome textobject plugin works with nvim-surround 
+    Awesome textobject plugin works with nvim-surround
 </p>
 
 <p align="center">
@@ -64,7 +64,7 @@ require("nvim-surround").buffer_setup({
 
 We will make the keymaps refer to your nvim-surround's aliases and surrounds **automatically** after calling `setup`. If you want to disable this feature, check the [Configuration](#Configuration) . <br>
 
-Or you're abled to map manually like the following:
+Or you're able to map manually like the following:
 <details>
 <summary><font size="2" color="">Click to show the code.</font></summary>
 
@@ -94,7 +94,7 @@ a = func(args)
 -- if press dsf
 a = args
 -- if press daf
-a = 
+a =
 -- if press dif
 a = func()
 ```
